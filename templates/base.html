@@ -1,53 +1,98 @@
 <!DOCTYPE html>
 {%  load static %}
+{% block javascript %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/materialize.min.js"></script>
 
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>mini blog</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="{% static "css/style.css" %}" >
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
-<body>
-<nav>
-    <div class="container nav-wrapper">
-        <a href="/" class="brand-logo">Bloggy</a>
-        <ul id="nav-mobile" class="right">
-            <li><a href="/">Home</a> </li>
-        </ul>
-    </div>
-</nav>
-<div class="container">
+    <head>
+        <meta charset="UTF-8">
+        <title>mini blog</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="{% static "css/style.css" %}" >
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/materialize.min.js"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Fira+Sans|Montserrat&display=swap" rel="stylesheet">
+    </head>
+    <body>
+            <div class="navbar-fixed">
+                <nav class="fixed white" style="font-family: 'Fira Sans'">
+                    <div class="container nav-wrapper">
+                        <a href="/" class="brand-logo black-text">Social Mapper</a>
+                        <ul id="nav-mobile" class="right">
+                            <li><a href="{% url 'scrape' %}" class="btn btn-success">Get news</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
 
-        <div class="row">
-            <form class="col s12" action="{%  url 'new_search' %}" method="post">
-                <div class="row valign-wrapper">
+            <div class="row">
+                                <div class="col s4">
+                                <span style="margin-bottom: 1rem; border-bottom: 1px solid lightseagreen; font-family: Fira Sans; ">
+                                    Twitter:
+                                </span>
+                                    <div class="container">
+                                                {% for object in twitter_list %}
+                                                        <a href="{{object.url}}">
+                                                            <div class="card hoverable">
+                                                                <div style="max-height: 12rem" class="card-image waves-effect waves-block waves-light">
+                                                                  <img style="height: -webkit-fill-available" src="{{ object.image }}">
+                                                                </div>
+                                                                <div class="card-content">
+                                                                    <p>
+                                                                        <span class="grey-text">{{object.tag}} - {{object.time}}</span>
+                                                                    </p>
+                                                                    <h5 class="grey-text text-darken-4">{{object.title}}</h5>
+                                                                    <p style="margin-top: 1rem"><a href="{{object.url}}">Go to article<i class="material-icons right">flight_takeoff</i></a></p>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                {% endfor %}
+                                    </div>
+                                </div>
 
-                    {% csrf_token %}
+                                <div class="col s4">
+                                <span style="margin-bottom: 1rem; border-bottom: 1px solid lightseagreen; font-family: Fira Sans; ">
+                                    Reddit:
+                                </span>
+                                    <div class="container">
+                                        {% for object in reddit_list %}
+                                                    <a href="{{object.reddit_url}}">
+                                                        <div class="card hoverable">
+                                                            <div class="card-content">
+                                                                <p>
+                                                                    <span class="grey-text">{{object.reddit_tag}}</span>
+                                                                </p>
+                                                                <h5 class="grey-text text-darken-4">{{object.reddit_title}}</h5>
+                                                                <p style="margin-top: 1rem"><a href="{{object.reddit_url}}">Go to article<i class="material-icons right">flight_takeoff</i></a></p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
 
+                                <div class="col s4">
+                                <span style="margin-bottom: 1rem; border-bottom: 1px solid lightseagreen; font-family: Fira Sans; ">
+                                    Youtube:
+                                </span>
+                                    <div class="container">
+                                        {% for object in youtube_list %}
+                                                    <a href="{{object.youtube_url}}">
+                                                        <div class="card hoverable">
+                                                            <div class="card-content">
+                                                                <h5 class="grey-text text-darken-4">{{object.youtube_title}}</h5>
+                                                                <p style="margin-top: 1rem"><a href="{{object.youtube_url}}">Go to video<i class="material-icons right">flight_takeoff</i></a></p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                {%  block content %}
+                {% endblock content %}
+            {% endblock javascript %}
 
-                    <input class="input-field col s8" type="text" name="search" placeholder="Search..." >
-
-                    <button class="col s3 right btn-small waves-effect waves-light" type="submit" name="action">
-                        <i class="material-icons right">send_flashon</i>
-                    </button>
-
-
-                </div>
-
-
-            </form>
-        </div>
-
-
-
-{%  block content %}
-
-{% endblock content %}
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/materialize.min.js" />
-</body>
+            </div>
+    </body>
 </html>

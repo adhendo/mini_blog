@@ -1,7 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
+            <form class="col s12" action="{%  url 'new_search' %}" method="post">
+                        <div style="margin-top: 1rem " class="row valign-wrapper">
+                            {% csrf_token %}
+                            <input class="col s7 input-field" type="text" name="search" placeholder="Search..." >
+                            <button style="margin-right: 10rem; margin-left: 3rem" class="col s1 left btn-small waves-effect waves-light" type="submit" name="action">
+                                Submit
+                            </button>
+                        </div>
+            </form>
 
-    <h2 style="text-align: center">{{ search | title }}</h2>
+            <h2 style="text-align:center; font-family: 'Montserrat'">{{ search | title }}</h2>
+
+            <div class="container">
+                        <a href="{{final_url}}">
+                          <div class="card">
+                            <div class="card-image waves-effect waves-block waves-light">
+                              <img class="activator" src="">
+                            </div>
+                            <div class="card-content">
+                              <span class="card-title activator grey-text text-darken-4">{{name}}</span>
+                              <p>{{followers}}<br>{{following}}<br>{{posts}}</p>
+                            </div>
+                          </div>
+                        </a>
+            </div>
 
 {% endblock %}
