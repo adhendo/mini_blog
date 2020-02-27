@@ -22,9 +22,7 @@ def scrape(request):
       content = session.get(url, verify=True).content
       soup = BSoup(content, "html.parser")
 
-      # print(soup)
       youtubefeed = soup.find_all('a',  {"class": "yt-uix-tile-link"})
-      # print(youtubefeed)
 
       for thing in youtubefeed:
           link = thing['href']
@@ -42,7 +40,7 @@ def scrape(request):
 
       redditfeed = soup.find_all('div', {"class": "top-matter"})
 
-      # print(redditfeed)
+
 
       for item in redditfeed:
           main = item.find_all('a')[0]
@@ -62,15 +60,11 @@ def scrape(request):
 
           new_headline.save(force_insert=False)
 
-      # print(soup)
 
       news = soup.find_all('div', {"class": "MomentCapsuleSummary"})
 
-      # print(news)
-
       for article in news:
         main = article.find_all('a')[1]
-        # img = article.find_all('img')[0]
         link = main['href']
 
         image_src = set(img['src'] for img in article.find_all('img', {"class": "MomentMediaItem-entity--image"}) if img.has_attr('src'))
@@ -86,6 +80,7 @@ def scrape(request):
         final_time = ' '.join(map(str, timetime))
 
         title = main['title']
+
         new_headline = TwitterHeadline()
         new_headline.title = title
         new_headline.url = link
@@ -96,9 +91,9 @@ def scrape(request):
   return redirect("../")
 
 def news_list(request):
-    headlines_twitter = TwitterHeadline.objects.all()[::-1]
-    headlines_reddit = RedditHeadline.objects.all()[::-1]
-    headlines_youtube = YoutubeHeadline.objects.all()[::-1]
+    headlines_twitter = TwitterHeadline.objects.all()[::-1][:10]
+    headlines_reddit = RedditHeadline.objects.all()[::-1][:10]
+    headlines_youtube = YoutubeHeadline.objects.all()[::-1][:10]
     context = {
         'twitter_list': headlines_twitter,
         'reddit_list': headlines_reddit,
