@@ -33,7 +33,10 @@ ALLOWED_HOSTS = [
                 '.fathomless-everglades-09479.herokuapp.com/',
                 'www.fathomless-everglades-09479.herokuapp.com/',
                 'https://www.fathomless-everglades-09479.herokuapp.com/',
-                'fathomless-everglades-09479.herokuapp.com'
+                'fathomless-everglades-09479.herokuapp.com',
+                'https://fathomless-everglades-09479.herokuapp.com/scrape/',
+                '.fathomless-everglades-09479.herokuapp.com/scrape/',
+                'www.fathomless-everglades-09479.herokuapp.com/scrape/',
                  ]
 
 
