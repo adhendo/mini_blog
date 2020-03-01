@@ -9,11 +9,11 @@ class Search(models.Model):
         verbose_name_plural = 'Searches'
 
 class TwitterHeadline(models.Model):
-  title = models.CharField(unique=True, max_length=200)
+  title = models.CharField(unique=True, max_length=2000)
   image = models.URLField(null=True, blank=True)
   url = models.TextField(primary_key=True)
-  tag = models.CharField(null=True, blank=True, max_length=200)
-  time = models.CharField(null=True, blank=True, max_length=200)
+  tag = models.CharField(null=True, blank=True, max_length=2000)
+  time = models.CharField(null=True, blank=True, max_length=2000)
   created = models.DateTimeField(auto_now=True)
   def __str__(self):
     return self.title
