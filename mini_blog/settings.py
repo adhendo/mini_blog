@@ -27,7 +27,7 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
                 'postgres://ayhogdnxlurnbb:b6a3e0b8e3d5011bd1de6a3e06827d9cfdb454ed5da6bc1bb865fd990ebae2c7@ec2-52-23-14-156.compute-1.amazonaws.com:5432/dcugugmpbf7kev',
