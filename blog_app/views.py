@@ -40,8 +40,6 @@ def scrape(request):
 
       redditfeed = soup.find_all('div', {"class": "top-matter"})
 
-
-
       for item in redditfeed:
           main = item.find_all('a')[0]
           link = main['href']
@@ -62,6 +60,7 @@ def scrape(request):
 
 
       news = soup.find_all('div', {"class": "MomentCapsuleSummary"})
+      print (news)
 
       for article in news:
         main = article.find_all('a')[1]
