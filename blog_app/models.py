@@ -19,7 +19,7 @@ class TwitterHeadline(models.Model):
     return self.title
 
 class RedditHeadline(models.Model):
-  reddit_title = models.CharField(unique=True, max_length=200)
+  reddit_title = models.CharField(unique=True, max_length=2000)
   reddit_image = models.URLField(null=True, blank=True)
   reddit_url = models.TextField(primary_key=True)
   reddit_tag =  models.TextField(null=True, blank=True)
@@ -29,7 +29,7 @@ class RedditHeadline(models.Model):
     return self.reddit_title
 
 class YoutubeHeadline(models.Model):
-    youtube_title = models.CharField(unique=True, max_length=200)
+    youtube_title = models.CharField(unique=True, max_length=2000)
     youtube_url = models.TextField(primary_key=True)
     youtube_image = models.URLField(null=True, blank=True)
     youtube_info = models.TextField(null=True, blank=True)
