@@ -33,7 +33,7 @@ def scrape(request):
           new_headline.youtube_title = title
           new_headline.youtube_url = final_link
           # new_headline.youtube_info = info
-          new_headline.save(force_insert=False)
+          new_headline.save(force_insert=False, force_update=False)
 
       redditfeed = soup.find_all('div', {"class": "top-matter"})
 
@@ -53,7 +53,7 @@ def scrape(request):
           new_headline.reddit_url = link
           new_headline.reddit_tag = final_tag
 
-          new_headline.save(force_insert=False)
+          new_headline.save(force_insert=False, force_update=False)
 
 
       news = soup.find_all('div', {"class": "MomentCapsuleSummary"})
