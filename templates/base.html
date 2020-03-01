@@ -29,30 +29,6 @@
             <div class="row">
                                 <div class="col l4 m6 s12">
                                 <span style="margin-bottom: 1rem; border-bottom: 1px solid lightseagreen; font-family: Fira Sans; ">
-                                    Twitter:
-                                </span>
-                                    <div class="container">
-                                                {% for object in twitter_list %}
-                                                        <a href="{{object.url}}">
-                                                            <div class="card hoverable">
-                                                                <div style="max-height: 12rem" class="card-image waves-effect waves-block waves-light">
-                                                                  <img style="height: -webkit-fill-available" src="{{ object.image }}">
-                                                                </div>
-                                                                <div class="card-content">
-                                                                    <p>
-                                                                        <span class="grey-text">{{object.tag}} - {{object.time}}</span>
-                                                                    </p>
-                                                                    <h5 class="grey-text text-darken-4">{{object.title}}</h5>
-                                                                    <p style="margin-top: 1rem"><a href="{{object.url}}">Go to article<i class="material-icons right">flight_takeoff</i></a></p>
-                                                                </div>
-                                                            </div>
-                                                        </a>
-                                                {% endfor %}
-                                    </div>
-                                </div>
-
-                                <div class="col l4 m6 s12">
-                                <span style="margin-bottom: 1rem; border-bottom: 1px solid lightseagreen; font-family: Fira Sans; ">
                                     Reddit:
                                 </span>
                                     <div class="container">
@@ -87,6 +63,30 @@
                                                         </div>
                                                     </a>
                                         {% endfor %}
+                                    </div>
+                                </div>
+
+                                <div class="col l4 m6 s12">
+                                <span style="margin-bottom: 1rem; border-bottom: 1px solid lightseagreen; font-family: Fira Sans; ">
+                                    Twitter:
+                                </span>
+                                    <div class="container">
+                                                {% for object in twitter_list %}
+                                                        <a href="{{object.url}}">
+                                                            <div class="card hoverable">
+                                                                <div style="max-height: 12rem" class="card-image waves-effect waves-block waves-light">
+                                                                  <img style="height: -webkit-fill-available" src="{{ object.image }}">
+                                                                </div>
+                                                                <div class="card-content">
+                                                                    <p>
+                                                                        <span class="grey-text">{{object.tag}} - {{object.time}}</span>
+                                                                    </p>
+                                                                    <h5 class="grey-text text-darken-4">{{object.title}}</h5>
+                                                                    <p style="margin-top: 1rem"><a href="{{object.url}}">Go to article<i class="material-icons right">flight_takeoff</i></a></p>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                {% endfor %}
                                     </div>
                                 </div>
                 {%  block content %}

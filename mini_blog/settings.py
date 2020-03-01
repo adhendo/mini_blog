@@ -28,9 +28,10 @@ SECRET_KEY = os.environ['SECRET_KEY']
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = [
+ALLOWED_HOSTS = ['localhost',
+                 'http://127.0.0.1:8000/'
                 '.fathomless-everglades-09479.herokuapp.com/',
                 'www.fathomless-everglades-09479.herokuapp.com/',
                 'https://www.fathomless-everglades-09479.herokuapp.com/',

@@ -5,9 +5,6 @@ from bs4 import BeautifulSoup as BSoup
 from . import models
 from .models import TwitterHeadline, RedditHeadline, YoutubeHeadline
 
-BASE_URL = 'https://www.instagram.com/{}'
-url = 'https://www.instagram.com/explore/locations/US/united-states/'
-
 # Create your views here.
 
 
@@ -60,7 +57,7 @@ def scrape(request):
 
 
       news = soup.find_all('div', {"class": "MomentCapsuleSummary"})
-      print (news)
+      # print (news)
 
       for article in news:
         main = article.find_all('a')[0]
