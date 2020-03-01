@@ -63,10 +63,12 @@ def scrape(request):
       print (news)
 
       for article in news:
-        main = article.find_all('a')[1]
+        main = article.find_all('a')[0]
         link = main['href']
 
-        image_src = set(img['src'] for img in article.find_all('img', {"class": "MomentMediaItem-entity--image"}) if img.has_attr('src'))
+        main2 = article.find_all('a')[1]
+
+        image_src = set(img['src'] for img in article.find_all('img', {"class": "MomentMediaItem-entity"}) if img.has_attr('src'))
         image = [elem.strip("{''}") for elem in image_src]
         final_image = ' '.join(map(str, image))
 
@@ -78,7 +80,7 @@ def scrape(request):
         timetime = [elem.strip("{''}").strip() for elem in time]
         final_time = ' '.join(map(str, timetime))
 
-        title = main['title']
+        title = main2['title']
 
         new_headline = TwitterHeadline()
         new_headline.title = title
@@ -86,7 +88,9 @@ def scrape(request):
         new_headline.image = final_image
         new_headline.tag = final_tag
         new_headline.time = final_time
-        new_headline.save(force_insert=False,)
+
+        new_headline.save(force_insert=False, force_update=False)
+
   return redirect("../")
 
 def news_list(request):
