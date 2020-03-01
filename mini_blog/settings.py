@@ -12,11 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import django_heroku
-import environ
 
-env = environ.Env()
-
-environ.Env.read_env()
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -28,7 +24,7 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = env.str('SECRET_KEY')
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
