@@ -6,7 +6,7 @@ from . import models
 from .models import TwitterHeadline, RedditHeadline, YoutubeHeadline
 
 # Create your views here.
-
+BASE_URL = ''
 
 def profile_search(request):
     return render(request, 'blog_app/profile_search.html')
@@ -101,27 +101,6 @@ def news_list(request):
     }
     return render(request, "base.html", context)
 
-def location_getter(request):
-    response = requests.get(url)
-    data = response.text
-    soup = BSoup(data, features='html.parser')
-
-    location_listings = soup.find_all('li', {'class': 'kiTXG'})
-
-
-    for location in location_listings:
-        location_title = location.find(class_='aMwHK').text
-        location_url = location.find('a').get('href')
-
-        final_locations = (location_title, location_url)
-
-    print(final_locations)
-
-    stuff_for_frontend = {
-        'final_locations': final_locations
-    }
-
-    return render(request, 'blog_app/locations.html', stuff_for_frontend)
 
 def new_search(request):
     search = request.POST.get('search')
