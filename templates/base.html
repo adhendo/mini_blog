@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="{% static "css/style.css" %}" >
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/materialize.min.js"></script>
+        <script type="text/javascript" src="{% static "js/materialize.min.js" %}"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Fira+Sans|Montserrat&display=swap" rel="stylesheet">
     </head>
@@ -18,20 +18,20 @@
             <div class="navbar-fixed">
                 <nav class="fixed white" style="font-family: 'Fira Sans'">
                     <div class="container nav-wrapper">
-                        <a href="/" style="font-size: 2.1rem" class="black-text">Social Mapper</a>
+                        <a href="/" class="waves-effect waves-yellow" style="font-size: 2.1rem; color: #333" >Social Mapper</a>
                         <ul id="nav-mobile" class="right">
-                            <li><a href="{% url 'scrape' %}" class="btn btn-success">Get news</a></li>
+                            <li><a href="{% url 'scrape' %}" style="color: #333" class="btn btn-banger waves-effect waves-yellow white">Get news</a></li>
                         </ul>
                     </div>
                 </nav>
             </div>
 
             <div class="row">
-                                <div class="col l4 m6 s12">
-                                <span style="margin-bottom: 1rem; border-bottom: 1px solid lightseagreen; font-family: Fira Sans; ">
-                                    Reddit:
+                                <div style="padding-top: 1rem" class="col l4 m6 s12">
+                                <span class="valign-wrapper" style="color: #555">
+                                    Reddit:<a href="{% url 'scrapeReddit' %}" style="color: #444; margin-left: 15rem" class="btn-small btn-success waves-effect waves-lighten yellow lighten-2">update</a>
                                 </span>
-                                    <div class="container">
+                                    <div style="margin-top: 2rem" class="container">
                                         {% for object in reddit_list %}
                                                     <a href="{{object.reddit_url}}">
                                                         <div class="card hoverable">
@@ -39,7 +39,7 @@
                                                                 <p>
                                                                     <span class="grey-text">{{object.reddit_tag}}</span>
                                                                 </p>
-                                                                <h5 class="grey-text text-darken-4">{{object.reddit_title}}</h5>
+                                                                <h5 style="color: #555">{{object.reddit_title}}</h5>
                                                                 <p style="margin-top: 1rem"><a href="{{object.reddit_url}}">Go to article<i class="material-icons right">flight_takeoff</i></a></p>
                                                             </div>
                                                         </div>
@@ -48,16 +48,16 @@
                                     </div>
                                 </div>
 
-                                <div class="col l4 m6 s12">
-                                <span style="margin-bottom: 1rem; border-bottom: 1px solid lightseagreen; font-family: Fira Sans; ">
-                                    Youtube:
+                                <div style="padding-top: 1rem" class="col l4 m6 s12">
+                                <span class="valign-wrapper" style="color: #555">
+                                    Youtube:<a href="{% url 'scrapeYoutube' %}" style="color: #444; margin-left: 15rem" class="btn-small btn-success waves-effect waves-lighten yellow lighten-2">update</a>
                                 </span>
-                                    <div class="container">
+                                    <div style="margin-top: 2rem" class="container">
                                         {% for object in youtube_list %}
                                                     <a href="{{object.youtube_url}}">
                                                         <div class="card hoverable">
                                                             <div class="card-content">
-                                                                <h5 class="grey-text text-darken-4">{{object.youtube_title}}</h5>
+                                                                <h5 style="color: #555">{{object.youtube_title}}</h5>
                                                                 <p style="margin-top: 1rem"><a href="{{object.youtube_url}}">Go to video<i class="material-icons right">flight_takeoff</i></a></p>
                                                             </div>
                                                         </div>
@@ -66,11 +66,11 @@
                                     </div>
                                 </div>
 
-                                <div class="col l4 m6 s12">
-                                <span style="margin-bottom: 1rem; border-bottom: 1px solid lightseagreen; font-family: Fira Sans; ">
-                                    Twitter:
+                                <div  style="padding-top: 1rem" class="col l4 m6 s12">
+                                <span class="valign-wrapper" style="color: #555">
+                                    Twitter:<a href="{% url 'scrapeTwitter' %}" style="color: #444; margin-left: 15rem" class="btn-small btn-success waves-effect waves-lighten yellow lighten-2">update</a>
                                 </span>
-                                    <div class="container">
+                                    <div style="margin-top: 2rem" class="container">
                                                 {% for object in twitter_list %}
                                                         <a href="{{object.url}}">
                                                             <div class="card hoverable">
@@ -81,7 +81,7 @@
                                                                     <p>
                                                                         <span class="grey-text">{{object.tag}} - {{object.time}}</span>
                                                                     </p>
-                                                                    <h5 class="grey-text text-darken-4">{{object.title}}</h5>
+                                                                    <h5 style="color: #555">{{object.title}}</h5>
                                                                     <p style="margin-top: 1rem"><a href="{{object.url}}">Go to article<i class="material-icons right">flight_takeoff</i></a></p>
                                                                 </div>
                                                             </div>
