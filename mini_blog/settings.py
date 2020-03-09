@@ -54,6 +54,9 @@ ALLOWED_HOSTS = ['localhost',
                 '.fathomless-everglades-09479.herokuapp.com/accounts/password_set/',
                 'www.fathomless-everglades-09479.herokuapp.com/accounts/password_set/',
                 'https://www.fathomless-everglades-09479.herokuapp.com/accounts/password_set/',
+'.fathomless-everglades-09479.herokuapp.com/accounts/password/reset/',
+                'www.fathomless-everglades-09479.herokuapp.com/accounts/password/reset/',
+                'https://www.fathomless-everglades-09479.herokuapp.com/accounts/password/reset/',
                  ]
 
 
