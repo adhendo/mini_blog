@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     # Third party --
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
     'crispy_forms',
     'crispy_forms_materialize',
 
