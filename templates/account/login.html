@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Log in{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>Log in</h2>
+        <form method="post">
+          {% csrf_token %}
+          {{ form|crispy }}
+          <button style="color: #333" class="btn btn-banger waves-effect waves-yellow white" type="submit">
+              Log in
+          </button>
+        </form>
+        <a href="{% url 'account_reset_password' %}">
+            Forgot Password?
+        </a>
+    </div>
+{% endblock content %}

@@ -15,84 +15,61 @@
         <link href="https://fonts.googleapis.com/css?family=Fira+Sans|Montserrat&display=swap" rel="stylesheet">
     </head>
     <body>
+            <script type="text/javascript">
+                document.addEventListener('DOMContentLoaded', function() {
+                    var elems = document.querySelectorAll('.dropdown-trigger');
+                    var options = {
+                        'closeOnClick': true,
+                        'hover':true
+                    }
+                    var instances = M.Dropdown.init(elems, options);
+
+                });
+            </script>
+
             <div class="navbar-fixed">
                 <nav class="fixed white" style="font-family: 'Fira Sans'">
                     <div class="container nav-wrapper">
                         <a href="/" class="waves-effect waves-yellow" style="font-size: 2.1rem; color: #333" >Social Mapper</a>
-                        <ul id="nav-mobile" class="right">
-                            <li><a href="{% url 'scrape' %}" style="color: #333" class="btn btn-banger waves-effect waves-yellow white">Get news</a></li>
-                        </ul>
+                            <ul id="nav-mobile" class="right">
+                                <li>
+                                    <a href="{% url 'scrape' %}" style="color: #333;box-shadow: none;" class="btn btn-banger waves-effect waves-yellow white">
+                                        Get news
+                                    </a>
+                                 </li>
+                                {% if user.is_authenticated %}
+
+                                      <a style="color: #333" class='dropdown-trigger btn btn-banger waves-effect waves-yellow white' href="#" data-target='dropdown1'>
+                                        {{ user.email }}
+                                      </a>
+                                      <ul id='dropdown1' class='dropdown-content container'>
+                                        <li><a style="color: #333" href="{% url 'account_change_password' %}">Change password</a></li>
+                                        <li class="divider" tabindex="-1"></li>
+                                        <li><a style="color: #333" href="{% url 'account_logout' %}">Log out</a></li>
+                                      </ul>
+
+                                {% else %}
+
+                                <a href="{% url 'account_login' %}" style="color: #333; background-color: #cfd8dc; box-shadow: none; border: 1px solid #333333" class="btn waves-effect waves-yellow ">Log in</a>
+                                <a href="{% url 'account_signup' %}" style="color: #333; background-color: #cfd8dc; box-shadow: none; border: 1px solid #333333" class="btn waves-effect waves-yellow ">Sign up</a>
+
+                                {% endif %}
+                            </ul>
+
                     </div>
                 </nav>
             </div>
 
-            <div class="row">
-                                <div style="padding-top: 1rem" class="col l4 m6 s12">
-                                <span class="valign-wrapper" style="color: #555">
-                                    Reddit:<a href="{% url 'scrapeReddit' %}" style="color: #444; margin-left: 15rem" class="btn-small btn-success waves-effect waves-lighten yellow lighten-2">update</a>
-                                </span>
-                                    <div style="margin-top: 2rem" class="container">
-                                        {% for object in reddit_list %}
-                                                    <a href="{{object.reddit_url}}">
-                                                        <div class="card hoverable">
-                                                            <div class="card-content">
-                                                                <p>
-                                                                    <span class="grey-text">{{object.reddit_tag}}</span>
-                                                                </p>
-                                                                <h5 style="color: #555">{{object.reddit_title}}</h5>
-                                                                <p style="margin-top: 1rem"><a href="{{object.reddit_url}}">Go to article<i class="material-icons right">flight_takeoff</i></a></p>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                        {% endfor %}
-                                    </div>
-                                </div>
 
-                                <div style="padding-top: 1rem" class="col l4 m6 s12">
-                                <span class="valign-wrapper" style="color: #555">
-                                    Youtube:<a href="{% url 'scrapeYoutube' %}" style="color: #444; margin-left: 15rem" class="btn-small btn-success waves-effect waves-lighten yellow lighten-2">update</a>
-                                </span>
-                                    <div style="margin-top: 2rem" class="container">
-                                        {% for object in youtube_list %}
-                                                    <a href="{{object.youtube_url}}">
-                                                        <div class="card hoverable">
-                                                            <div class="card-content">
-                                                                <h5 style="color: #555">{{object.youtube_title}}</h5>
-                                                                <p style="margin-top: 1rem"><a href="{{object.youtube_url}}">Go to video<i class="material-icons right">flight_takeoff</i></a></p>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                        {% endfor %}
-                                    </div>
-                                </div>
 
-                                <div  style="padding-top: 1rem" class="col l4 m6 s12">
-                                <span class="valign-wrapper" style="color: #555">
-                                    Twitter:<a href="{% url 'scrapeTwitter' %}" style="color: #444; margin-left: 15rem" class="btn-small btn-success waves-effect waves-lighten yellow lighten-2">update</a>
-                                </span>
-                                    <div style="margin-top: 2rem" class="container">
-                                                {% for object in twitter_list %}
-                                                        <a href="{{object.url}}">
-                                                            <div class="card hoverable">
-                                                                <div style="max-height: 12rem" class="card-image waves-effect waves-block waves-light">
-                                                                  <img style="height: -webkit-fill-available" src="{{ object.image }}">
-                                                                </div>
-                                                                <div class="card-content">
-                                                                    <p>
-                                                                        <span class="grey-text">{{object.tag}} - {{object.time}}</span>
-                                                                    </p>
-                                                                    <h5 style="color: #555">{{object.title}}</h5>
-                                                                    <p style="margin-top: 1rem"><a href="{{object.url}}">Go to article<i class="material-icons right">flight_takeoff</i></a></p>
-                                                                </div>
-                                                            </div>
-                                                        </a>
-                                                {% endfor %}
-                                    </div>
-                                </div>
-                {%  block content %}
-                {% endblock content %}
+
+        <div class="row">
+            {%  block content %}
+
+            {% endblock content %}
+        </div>
+
             {% endblock javascript %}
 
-            </div>
     </body>
 </html>

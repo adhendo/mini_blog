@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import HomePageView
 
 urlpatterns = [
     path('', views.news_list, name='home'),

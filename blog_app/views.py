@@ -4,9 +4,13 @@ from django.shortcuts import render, redirect
 from bs4 import BeautifulSoup as BSoup
 from . import models
 from .models import TwitterHeadline, RedditHeadline, YoutubeHeadline
+from django.views.generic import TemplateView
 
 # Create your views here.
 BASE_URL = ''
+
+class HomePageView(TemplateView):
+    template_name = 'blog_app/news.html'
 
 def profile_search(request):
     return render(request, 'blog_app/profile_search.html')
@@ -20,7 +24,7 @@ def news_list(request):
         'reddit_list': headlines_reddit,
         'youtube_list': headlines_youtube
     }
-    return render(request, "base.html", context)
+    return render(request, "blog_app/news.html", context)
 
 
 def scrapeYoutube(request):

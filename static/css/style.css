@@ -6,3 +6,13 @@
     border: 1px solid #333 !important;
     background-color: #fff !important;
 }
+
+.btn-account {
+    border: 1px solid #333 !important;
+    background-color: #414040a4 !important;
+}
+
+.dropdown-content{
+   width: max-content !important;
+   height:auto !important;
+}

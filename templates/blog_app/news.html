@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    {% csrf_token %}
+
+                                <div style="padding-top: 1rem" class="col l4 m6 s12">
+                                <span class="valign-wrapper" style="color: #555">
+                                    Reddit:<a href="{% url 'scrapeReddit' %}" style="color: #444; margin-left: 15rem" class="btn-small btn-success waves-effect waves-lighten yellow lighten-2">update</a>
+                                </span>
+                                    <div style="margin-top: 2rem" class="container">
+                                        {% for object in reddit_list %}
+                                                    <a href="{{object.reddit_url}}">
+                                                        <div class="card hoverable">
+                                                            <div class="card-content">
+                                                                <p>
+                                                                    <span class="grey-text">{{object.reddit_tag}}</span>
+                                                                </p>
+                                                                <h5 style="color: #555">{{object.reddit_title}}</h5>
+                                                                <p style="margin-top: 1rem"><a href="{{object.reddit_url}}">Go to article<i class="material-icons right">flight_takeoff</i></a></p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                                <div style="padding-top: 1rem" class="col l4 m6 s12">
+                                <span class="valign-wrapper" style="color: #555">
+                                    Youtube:<a href="{% url 'scrapeYoutube' %}" style="color: #444; margin-left: 15rem" class="btn-small btn-success waves-effect waves-lighten yellow lighten-2">update</a>
+                                </span>
+                                    <div style="margin-top: 2rem" class="container">
+                                        {% for object in youtube_list %}
+                                                    <a href="{{object.youtube_url}}">
+                                                        <div class="card hoverable">
+                                                            <div class="card-content">
+                                                                <h5 style="color: #555">{{object.youtube_title}}</h5>
+                                                                <p style="margin-top: 1rem"><a href="{{object.youtube_url}}">Go to video<i class="material-icons right">flight_takeoff</i></a></p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                                <div  style="padding-top: 1rem" class="col l4 m6 s12">
+                                <span class="valign-wrapper" style="color: #555">
+                                    Twitter:<a href="{% url 'scrapeTwitter' %}" style="color: #444; margin-left: 15rem" class="btn-small btn-success waves-effect waves-lighten yellow lighten-2">update</a>
+                                </span>
+                                    <div style="margin-top: 2rem" class="container">
+                                                {% for object in twitter_list %}
+                                                        <a href="{{object.url}}">
+                                                            <div class="card hoverable">
+                                                                <div style="max-height: 12rem" class="card-image waves-effect waves-block waves-light">
+                                                                  <img style="height: -webkit-fill-available" src="{{ object.image }}">
+                                                                </div>
+                                                                <div class="card-content">
+                                                                    <p>
+                                                                        <span class="grey-text">{{object.tag}} - {{object.time}}</span>
+                                                                    </p>
+                                                                    <h5 style="color: #555">{{object.title}}</h5>
+                                                                    <p style="margin-top: 1rem"><a href="{{object.url}}">Go to article<i class="material-icons right">flight_takeoff</i></a></p>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                {% endfor %}
+                                    </div>
+
+                                </div>
+
+{% endblock content %}
