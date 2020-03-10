@@ -166,6 +166,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 STATIC_ROOT = 'staticfiles'
 
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 # Django-Allauth Config
 
 LOGIN_REDIRECT_URL = 'home'
@@ -184,5 +187,7 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 30
 
 django_heroku.settings(locals())
