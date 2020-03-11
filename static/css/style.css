@@ -16,3 +16,7 @@
    width: max-content !important;
    height:auto !important;
 }
+
+.truncator {
+    -webkit-line-clamp: 4;
+}

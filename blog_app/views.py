@@ -12,17 +12,32 @@ BASE_URL = ''
 class HomePageView(TemplateView):
     template_name = 'blog_app/news.html'
 
+def like_post(request):
+    post = get_objet_or_404(Post, id=request.POST.get('post_id'))
+    is_liked = False
+    if post.like.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+        is_liked = False
+    else:
+        post.likes.add(request.user)
+        is_liked = True
+    return HttpResponseRedirect(post.get_absolute_url())
+
 def profile_search(request):
     return render(request, 'blog_app/profile_search.html')
 
 def news_list(request):
-    headlines_twitter = TwitterHeadline.objects.all()[::-1][:10]
-    headlines_reddit = RedditHeadline.objects.all()[::-1][:10]
-    headlines_youtube = YoutubeHeadline.objects.all()[::-1][:10]
+    is_liked = False
+    headlines_twitter = TwitterHeadline.objects.all()[::-1][:15]
+    headlines_reddit = RedditHeadline.objects.all()[::-1][:15]
+    headlines_youtube = YoutubeHeadline.objects.all()[::-1][:15]
+    #if headlines_youtube.likes.filter(id=request.user.id).exists(): is_liked = True
     context = {
         'twitter_list': headlines_twitter,
         'reddit_list': headlines_reddit,
-        'youtube_list': headlines_youtube
+        'youtube_list': headlines_youtube,
+        'is_liked': is_liked,
+
     }
     return render(request, "blog_app/news.html", context)
 
@@ -35,14 +50,31 @@ def scrapeYoutube(request):
     soup = BSoup(content, "html.parser")
 
     youtubefeed = soup.find_all('a', {"class": "yt-uix-tile-link"})
+    thumbnail = soup.find_all('a', {"class": "ytd-thumbnail"})
+    # youtubechannel = soup.find_all('a',{"class":"yt-uix-sessionlink"})
+    youtubemeta = soup.find_all('ul',{"class":"yt-lockup-meta-info"})
+
+    # print(soup)
+
+    for item in youtubemeta:
+        metadataInfo = set(li.text for li in item.find_all('li'))
+        # print(metadataInfo)
+        info = [elem.strip("{''}") for elem in metadataInfo]
+        final_meta = ' '.join(map(str, info))
+        print(final_meta)
+        new_headline = YoutubeHeadline()
+        new_headline.youtube_metadata = final_meta
+
+    for item in thumbnail:
+        link = item['href']
+        new_headline = YoutubeHeadline()
+        new_headline.youtube_thumbnailUrl = link
 
     for thing in youtubefeed:
         link = thing['href']
         title = thing['title']
         final_link = str("https://youtube.com" + link)
-
         # info =  thing.find_all('ul', {"class": "yt-lockup-meta-info"})
-
         new_headline = YoutubeHeadline()
         new_headline.youtube_title = title
         new_headline.youtube_url = final_link
@@ -58,6 +90,13 @@ def scrapeReddit(request):
     soup = BSoup(content, "html.parser")
 
     redditfeed = soup.find_all('div', {"class": "top-matter"})
+    thumbnail = soup.find_all('div', {"class": "thing"})
+
+    for item in thumbnail:
+        main = item.find_all('a', {"class": "thumbnail"})[0]
+        link = main['href']
+        new_headline = RedditHeadline()
+        new_headline.reddit_thumbnailUrl = link
 
     for item in redditfeed:
         main = item.find_all('a')[0]
@@ -80,7 +119,7 @@ def scrapeReddit(request):
 
 def scrapeTwitter(request):
     session = requests.Session()
-    session.headers = {"User-Agent": "Googlebot/2.1 (+http://www.google.com/bot.html)"}
+    session.headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36"}
     url = "https://twitter.com/explore"
     content = session.get(url, verify=True).content
     soup = BSoup(content, "html.parser")

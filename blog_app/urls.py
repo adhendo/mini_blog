@@ -10,4 +10,5 @@ urlpatterns = [
     path('scrapeReddit/', views.scrapeReddit, name="scrapeReddit"),
     path('scrapeYoutube/', views.scrapeYoutube, name="scrapeYoutube"),
     path('scrapeTwitter/', views.scrapeTwitter, name="scrapeTwitter"),
+    path(r'^like/$', views.like_post, name="like_post")
 ]

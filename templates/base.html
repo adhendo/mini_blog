@@ -32,13 +32,7 @@
                     <div class="container nav-wrapper">
                         <a href="/" class="waves-effect waves-yellow" style="font-size: 2.1rem; color: #333" >Social Mapper</a>
                             <ul id="nav-mobile" class="right">
-                                <li>
-                                    <a href="{% url 'scrape' %}" style="color: #333;box-shadow: none;" class="btn btn-banger waves-effect waves-yellow white">
-                                        Get news
-                                    </a>
-                                 </li>
                                 {% if user.is_authenticated %}
-
                                       <a style="color: #333" class='dropdown-trigger btn btn-banger waves-effect waves-yellow white' href="#" data-target='dropdown1'>
                                         {{ user.email }}
                                       </a>
@@ -47,7 +41,6 @@
                                         <li class="divider" tabindex="-1"></li>
                                         <li><a style="color: #333" href="{% url 'account_logout' %}">Log out</a></li>
                                       </ul>
-
                                 {% else %}
 
                                 <a href="{% url 'account_login' %}" style="color: #333; background-color: #cfd8dc; box-shadow: none; border: 1px solid #333333" class="btn waves-effect waves-yellow ">Log in</a>
