@@ -1,13 +1,36 @@
 import requests
-from requests.compat import quote_plus
+from selenium import webdriver
+import time
+from pytrends.request import TrendReq
 from django.shortcuts import render, redirect
 from bs4 import BeautifulSoup as BSoup
 from . import models
-from .models import TwitterHeadline, RedditHeadline, YoutubeHeadline
+from .models import TwitterHeadline, RedditHeadline, YoutubeHeadline, GoogleTrends
 from django.views.generic import TemplateView
 
 # Create your views here.
 BASE_URL = ''
+pytrends = TrendReq(hl='en-US', tz=360)
+
+def scrapeGoogle(request):
+    df = pytrends.trending_searches(pn='united_states')
+    results = df.to_string(index=False)
+
+    df_2 = pytrends.today_searches(pn='US')
+    results_2 = df_2.to_string(index=False)
+
+    for result in results, results_2:
+        new_headline = GoogleTrends()
+        new_headline.trends = results
+        new_headline.realtimetrends = results_2
+        new_headline.save(force_insert=False, force_update=False)
+    return redirect("../")
+
+    #print(results)
+
+
+
+
 
 class HomePageView(TemplateView):
     template_name = 'blog_app/news.html'
@@ -31,16 +54,16 @@ def news_list(request):
     headlines_twitter = TwitterHeadline.objects.all()[::-1][:15]
     headlines_reddit = RedditHeadline.objects.all()[::-1][:15]
     headlines_youtube = YoutubeHeadline.objects.all()[::-1][:15]
+    trends_google = GoogleTrends.objects.all()[::-1][:1]
     #if headlines_youtube.likes.filter(id=request.user.id).exists(): is_liked = True
     context = {
         'twitter_list': headlines_twitter,
         'reddit_list': headlines_reddit,
         'youtube_list': headlines_youtube,
+        'trends_google': trends_google,
         'is_liked': is_liked,
-
     }
     return render(request, "blog_app/news.html", context)
-
 
 def scrapeYoutube(request):
     session = requests.Session()
@@ -119,42 +142,21 @@ def scrapeReddit(request):
 
 def scrapeTwitter(request):
     session = requests.Session()
-    session.headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36"}
+    session.headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0 Safari/605.1.15"}
     url = "https://twitter.com/explore"
-    content = session.get(url, verify=True).content
-    soup = BSoup(content, "html.parser")
+    driver = webdriver.Firefox()
+    driver.get(url)
+    time.sleep(30)
+    results = driver.find_elements_by_xpath()
+    data = []
 
-    news = soup.find_all('div', {"class": "MomentCapsuleSummary--portrait"})
-    print(soup)
-
-    for article in news:
-        main = article.find_all('a')[0]
-        link = main['href']
-
-        main2 = article.find_all('a')[1]
-
-        image_src = set(
-            img['src'] for img in article.find_all('img', {"class": "MomentMediaItem-entity"}) if img.has_attr('src'))
-        image = [elem.strip("{''}") for elem in image_src]
-        final_image = ' '.join(map(str, image))
-
-        tag = set(span.text for span in article.find_all('span', {"class": "MomentCapsuleSubtitle-category"}))
-        tagtag = [elem.strip("{''}").strip() for elem in tag]
-        final_tag = ' '.join(map(str, tagtag))
-
-        time = set(span.text for span in article.find_all('span', {"class": "MomentCapsuleSubtitle-context"}))
-        timetime = [elem.strip("{''}").strip() for elem in time]
-        final_time = ' '.join(map(str, timetime))
-
-        title = main2['title']
-
+    for result in results:
         new_headline = TwitterHeadline()
         new_headline.title = title
         new_headline.url = link
         new_headline.image = final_image
         new_headline.tag = final_tag
         new_headline.time = final_time
-
         new_headline.save(force_insert=False, force_update=False)
     return redirect("../")
 

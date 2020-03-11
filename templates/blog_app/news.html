@@ -3,82 +3,71 @@
 
 {% block content %}
     {% csrf_token %}
+                                <div  style="padding-top: 1rem; margin-bottom: 1rem" class="col l12 m12 s12">
+                                    <div style="white-space: nowrap; overflow: hidden" class="container">
+                                        {% for object in trends_google %}
+                                            <span class="valign-wrapper" style="color: #555">
+                                                Google Trends:<span style="margin-left: 1rem" class="grey-text">
+                                                    - {{ object.created }}
+                                                </span>
+                                                <a href="{% url 'scrapeGoogle' %}" style="color: #444; margin-left: 3rem" class="btn-small btn-success waves-effect waves-lighten yellow lighten-2">update</a>
 
-                                <div style="padding-top: 1rem" class="col l4 m6 s12">
-                                <span class="valign-wrapper" style="color: #555">
-                                    Reddit:<a href="{% url 'scrapeReddit' %}" style="color: #444; margin-left: 15rem" class="btn-small btn-success waves-effect waves-lighten yellow lighten-2">update</a>
-                                </span>
-                                    <div style="margin-top: 2rem" class="container">
-                                        {% for object in reddit_list %}
-
-                                                        <div class="card hoverable">
-                                                            <div style="contain: content" class="card-content">
-                                                                <p>
-                                                                    <span class="grey-text">{{object.reddit_tag}}</span>
-                                                                </p>
-                                                                <a href="{{object.reddit_url}}">
-                                                                    <h5 class="truncator" style="color: #555">{{object.reddit_title}}</h5>
+                                            </span>
+                                            <div class="trend-object">
+                                                {{ object.realtimetrends }}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="container">
+                                    <div style="padding-top: 1rem" class="col l6 m6 s12">
+                                        <span class="valign-wrapper" style="color: #555">
+                                            Reddit:<a href="{% url 'scrapeReddit' %}" style="color: #444; margin-left: 15rem" class="btn-small btn-success waves-effect waves-lighten yellow lighten-2">update</a>
+                                        </span>
+                                        <div style="margin-top: 2rem" class="container">
+                                            {% for object in reddit_list %}
+                                                <a href="{{object.reddit_url}}">
+                                                            <div class="card hoverable">
+                                                                <div style="contain: content" class="card-content">
+                                                                    <p>
+                                                                        <span class="grey-text">{{object.reddit_tag}}</span>
+                                                                    </p>
+                                                                    <h5 class="truncator" style="color: #555">
+                                                                        {{object.reddit_title}}
+                                                                    </h5>
                                                                     <p style="margin-top: 1rem">
                                                                         <div id="like-section">
                                                                         </div>
                                                                     </p>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-
-                                        {% endfor %}
-                                    </div>
-                                </div>
-
-                                <div style="padding-top: 1rem" class="col l4 m6 s12">
-                                <span class="valign-wrapper" style="color: #555">
-                                    Youtube:<a href="{% url 'scrapeYoutube' %}" style="color: #444; margin-left: 15rem" class="btn-small btn-success waves-effect waves-lighten yellow lighten-2">update</a>
-                                </span>
-                                    <div style="margin-top: 2rem" class="container">
-                                        {% for object in youtube_list %}
-
-                                                        <div class="card hoverable">
-                                                            <div class="card-content">
-                                                                <p>
-                                                                    <span class="grey-text">
-                                                                        {{object.youtube_metadata}}
-                                                                    </span>
-                                                                </p>
-                                                                <a href="{{object.youtube_url}}">
-                                                                    <h5 style="color: #555">{{object.youtube_title}}</h5>
-                                                                    <p style="margin-top: 1rem"></p>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-
-                                        {% endfor %}
-                                    </div>
-                                </div>
-
-                                <div  style="padding-top: 1rem" class="col l4 m6 s12">
-                                        <span class="valign-wrapper" style="color: #555">
-                                            Twitter:<a href="{% url 'scrapeTwitter' %}" style="color: #444; margin-left: 15rem" class="btn-small btn-success waves-effect waves-lighten yellow lighten-2">update</a>
-                                        </span>
-                                        <div style="margin-top: 2rem" class="container">
-                                                {% for object in twitter_list %}
-                                                            <div class="card hoverable">
-                                                                <a href="{{object.url}}">
-                                                                    <div style="max-height: 12rem" class="card-image waves-effect waves-block waves-light">
-                                                                      <img style="height: -webkit-fill-available" src="{{ object.image }}">
-                                                                    </div>
-                                                                </a>
-                                                                <div class="card-content">
-                                                                    <p>
-                                                                        <span class="grey-text">{{object.tag}} - {{object.time}}</span>
-
-                                                                    </p>
-                                                                    <a href="{{object.url}}">
-                                                                        <h5 style="color: #555">{{object.title}}</h5>
-                                                                    </a>
                                                                 </div>
                                                             </div>
-                                                {% endfor %}
+                                                </a>
+                                            {% endfor %}
                                         </div>
+                                    </div>
+
+                                    <div style="padding-top: 1rem" class="col l6 m6 s12">
+                                        <span class="valign-wrapper" style="color: #555">
+                                            Youtube:<a href="{% url 'scrapeYoutube' %}" style="color: #444; margin-left: 15rem" class="btn-small btn-success waves-effect waves-lighten yellow lighten-2">update</a>
+                                        </span>
+                                        <div style="margin-top: 2rem" class="container">
+                                            {% for object in youtube_list %}
+                                                <a href="{{object.youtube_url}}">
+                                                            <div class="card hoverable">
+                                                                <div class="card-content">
+                                                                    <p>
+                                                                        <span class="grey-text">
+                                                                            {{object.created}}
+                                                                        </span>
+                                                                    </p>
+                                                                        <h5 style="color: #555">{{object.youtube_title}}</h5>
+                                                                        <p style="margin-top: 1rem"></p>
+                                                                </div>
+                                                            </div>
+                                                </a>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
                                 </div>
 
 {% endblock content %}

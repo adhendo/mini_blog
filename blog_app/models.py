@@ -45,3 +45,7 @@ class YoutubeHeadline(models.Model):
     def __str__(self):
         return self.youtube_title
 
+class GoogleTrends(models.Model):
+    trends = models.CharField(max_length=200000)
+    realtimetrends = models.CharField(null=True, blank=True,max_length=200000)
+    created = models.DateTimeField(auto_now=True)

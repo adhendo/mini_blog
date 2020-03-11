@@ -20,3 +20,18 @@
 .truncator {
     -webkit-line-clamp: 4;
 }
+
+.trend-object {
+    margin-top: 1rem;
+    position: relative;
+    animation: marquee 20s linear infinite;
+}
+
+.trend-object:hover {
+    animation-play-state: paused;
+}
+
+@keyframes marquee {
+  0%   { left: 100%; }
+  100% { left: -205%; }
+}
