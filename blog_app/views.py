@@ -124,8 +124,8 @@ def scrapeTwitter(request):
     content = session.get(url, verify=True).content
     soup = BSoup(content, "html.parser")
 
-    news = soup.find_all('div', {"class": "MomentCapsuleSummary"})
-    # print (news)
+    news = soup.find_all('div', {"class": "MomentCapsuleSummary--portrait"})
+    print(soup)
 
     for article in news:
         main = article.find_all('a')[0]
