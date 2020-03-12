@@ -24,7 +24,9 @@
 .trend-object {
     margin-top: 1rem;
     position: relative;
-    animation: marquee 20s linear infinite;
+    animation: marquee 26s linear infinite;
+    font-weight: bold;
+    font-size: larger;
 }
 
 .trend-object:hover {
@@ -34,4 +36,17 @@
 @keyframes marquee {
   0%   { left: 100%; }
   100% { left: -205%; }
+}
+
+.sidenav-overlay {
+    z-index: 900 !important;
+}
+
+nav a.sidenav-trigger {
+    height: auto!important;
+    margin: 0!important;
+}
+
+nav ul a:hover {
+    background-color: initial !important;
 }
